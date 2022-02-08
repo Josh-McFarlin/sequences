@@ -29,14 +29,14 @@ const TestScreen = () => {
   );
 
   React.useEffect(() => {
-    if (!recall && playMemorization) {
+    if (running && playMemorization) {
       song.play();
     } else if (recall && playRecall) {
       song.play();
     } else {
       song.pause();
     }
-  }, [recall, playMemorization, playRecall]);
+  }, [running, recall, playMemorization, playRecall]);
 
   React.useEffect(() => {
     if (index >= sequenceLength) {
