@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { createSequence } from "../../utils/sequence";
+import { songs, useSong } from "../../utils/music";
 import urls from "../../utils/urls";
 import classes from "./TestScreen.module.scss";
 
@@ -16,19 +17,40 @@ const TestScreen = () => {
   );
   const [seqIndex, setSeqIndex] = React.useState(-1);
   const timer = React.useRef(0);
+  const song = useSong(songs.instrumental[0]);
+  const [playMemorization, setPlayMemorization] = React.useState(
+    Math.random() < 0.5
+  );
+  const [playRecall, setPlayRecall] = React.useState(Math.random() < 0.5);
 
   React.useEffect(() => {
     return () => {
       clearInterval(timer.current);
+      song.pause();
     };
   }, []);
+  
+
+  React.useEffect(() => {
+    if (!recall && playMemorization) {
+      song.play();
+    } else if (recall && playRecall) {
+      song.play();
+    } else {
+      song.pause();
+    }
+  }, [recall, playMemorization, playRecall]);
 
   React.useEffect(() => {
     if (seqIndex >= sequenceLength) {
       clearInterval(timer.current);
       setRecall(true);
+
+      if (!playRecall) {
+        song.pause();
+      }
     }
-  }, [seqIndex]);
+  }, [seqIndex, playRecall]);
 
   const handleStart = React.useCallback(() => {
     setSeqIndex(0);
