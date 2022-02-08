@@ -1,4 +1,4 @@
-const randomNumber = () => Math.floor(10 * Math.random() + 1);
+const randomNumber = () => Math.floor(10 * Math.random());
 
 export const createSequence = (length = 10) => {
   const result = new Array(length);
