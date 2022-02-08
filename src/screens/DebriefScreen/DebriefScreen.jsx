@@ -8,7 +8,7 @@ const DebriefScreen = () => (
   <div className={clsx(classes.root)}>
     <div className={classes.fill} />
     <h1>Debriefing</h1>
-    <h3>Congrats!</h3>
+    <h2>Congrats!</h2>
     <h4>You have successfully completed this study</h4>
     <h4>The goal of this study was to find the effect of music on memory</h4>
     <h4>
