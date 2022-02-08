@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { createSequence } from "../../utils/sequence";
 import { songs, useSong } from "../../utils/music";
+import { useIntervalIndex } from "../../utils/timer";
 import urls from "../../utils/urls";
 import classes from "./TestScreen.module.scss";
 
@@ -15,21 +16,17 @@ const TestScreen = () => {
   const [sequence, setSequence] = React.useState(
     createSequence(sequenceLength)
   );
-  const [seqIndex, setSeqIndex] = React.useState(-1);
-  const timer = React.useRef(0);
   const song = useSong(songs.instrumental[0]);
   const [playMemorization, setPlayMemorization] = React.useState(
     Math.random() < 0.5
   );
   const [playRecall, setPlayRecall] = React.useState(Math.random() < 0.5);
-
-  React.useEffect(() => {
-    return () => {
-      clearInterval(timer.current);
-      song.pause();
-    };
-  }, []);
-  
+  const { index, running, handleStart, handleRestart } = useIntervalIndex(
+    0,
+    sequenceLength - 1,
+    1,
+    timeBetweenNumbers
+  );
 
   React.useEffect(() => {
     if (!recall && playMemorization) {
@@ -42,33 +39,18 @@ const TestScreen = () => {
   }, [recall, playMemorization, playRecall]);
 
   React.useEffect(() => {
-    if (seqIndex >= sequenceLength) {
-      clearInterval(timer.current);
+    if (index >= sequenceLength) {
       setRecall(true);
-
-      if (!playRecall) {
-        song.pause();
-      }
     }
-  }, [seqIndex, playRecall]);
-
-  const handleStart = React.useCallback(() => {
-    setSeqIndex(0);
-
-    timer.current = setInterval(
-      () => setSeqIndex((prevIndex) => prevIndex + 1),
-      timeBetweenNumbers
-    );
-  }, []);
+  }, [index]);
 
   const handleSubmit = async () => {
     await router.replace(urls.debrief);
   };
 
   const handleForgot = () => {
-    const newSequence = createSequence(sequenceLength);
-    setSequence(newSequence);
-    setSeqIndex(-1);
+    handleRestart();
+    setSequence(createSequence(sequenceLength));
     setRecall(false);
   };
 
@@ -88,10 +70,10 @@ const TestScreen = () => {
 
   return (
     <div className={clsx(classes.root)}>
-      {seqIndex < 0 ? (
-        <button onClick={handleStart}>Press When Ready</button>
+      {running ? (
+        <h1>{sequence[index]}</h1>
       ) : (
-        <h1>{sequence[seqIndex]}</h1>
+        <button onClick={handleStart}>Press When Ready</button>
       )}
     </div>
   );
