@@ -19,12 +19,14 @@ const IntroScreen = () => (
       <h3>Please memorize these numbers in order.</h3>
     </div>
     <div className={classes.page}>
-      <h3>After a few seconds these numbers will disappear.</h3>
-      <h3>Then type these numbers in the order you remember them.</h3>
+      <h3>
+        Once all numbers have been shown, you will be asked to recall them in
+        their order of presentation.
+      </h3>
       <h3>If you cannot remember, press "I Forgot"</h3>
     </div>
     <div className={classes.page}>
-      <h3>When you are ready to begin, press the button below</h3>
+      <h3>When you are ready to begin, press the button below:</h3>
       <Link href={urls.test}>Start Test</Link>
     </div>
   </BindKeyboardSwipeableViews>

@@ -58,8 +58,8 @@ const TestScreen = () => {
     return (
       <div className={clsx(classes.root)}>
         <h2>Recall</h2>
-        <h3>Please type the sequence in order</h3>
-        <input />
+        <h3>Please type the sequence in the order it appeared.</h3>
+        <input inputMode="numeric" />
         <div className={classes.row}>
           <button onClick={handleSubmit}>Submit</button>
           <button onClick={handleForgot}>I Forgot</button>
