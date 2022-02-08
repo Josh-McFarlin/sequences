@@ -11,13 +11,12 @@ const BindKeyboardSwipeableViews = bindKeyboard(SwipeableViews);
 const IntroScreen = () => (
   <BindKeyboardSwipeableViews className={clsx(classes.root)} enableMouseEvents>
     <div className={classes.page}>
-      <h1>Welcome to our study</h1>
       <h3>The following excercise will be testing your memory.</h3>
       <p className={classes.swipeNotif}>Please swipe →</p>
     </div>
     <div className={classes.page}>
       <h3>You will be shown a sequence of numbers.</h3>
-      <h3>Please memorize this numbers in order.</h3>
+      <h3>Please memorize these numbers in order.</h3>
     </div>
     <div className={classes.page}>
       <h3>After a few seconds these numbers will disappear.</h3>
