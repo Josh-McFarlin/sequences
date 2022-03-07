@@ -10,6 +10,8 @@
   gap: 24px;
   padding: 24px;
   position: relative;
+  overflow-x: hidden;
+  overflow-y: auto;
 
   input {
     width: 100%;
