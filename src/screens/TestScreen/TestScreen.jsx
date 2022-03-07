@@ -61,6 +61,10 @@ const TestScreen = () => {
     <div className={clsx(classes.root)}>
       {stage === 0 && (
         <>
+        <label>
+          Participant ID:
+          <input inputMode="numeric" />
+          </label>
           <button onClick={handleStart}>Press When Ready</button>
         </>
       )}
