@@ -12,6 +12,8 @@ const YoutubePlayer = ({ url, playing = false }) => (
       bottom: 1,
       right: 1,
     }}
+    width={1}
+    height={1}
   />
 );
 

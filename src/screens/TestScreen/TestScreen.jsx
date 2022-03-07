@@ -73,7 +73,7 @@ const TestScreen = () => {
       {stage === 1 && (
         <>
           {sequences.map((sequence) => (
-            <h1 key={sequence}>{sequence}</h1>
+            <h3 key={sequence}>{sequence}</h3>
           ))}
         </>
       )}
