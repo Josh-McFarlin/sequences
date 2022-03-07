@@ -89,7 +89,7 @@ const TestScreen = () => {
         </>
       )}
       <YoutubePlayer
-        url={"https://www.youtube.com/watch?v=1prweT95Mo0"}
+        url={"https://youtu.be/1prweT95Mo0?t=8"}
         playing={playing}
       />
     </div>
