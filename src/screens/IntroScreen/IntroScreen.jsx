@@ -30,7 +30,6 @@ const IntroScreen = () => {
           Once all numbers have been shown, you will be asked to recall them in
           their order of presentation.
         </h3>
-        <h4>If you cannot remember, press "I Forgot"</h4>
       </div>
       <div className={classes.page}>
         <h3>When you are ready to begin, press the button below:</h3>
