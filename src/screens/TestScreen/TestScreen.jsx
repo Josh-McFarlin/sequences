@@ -41,7 +41,7 @@ const TestScreen = () => {
       setPlaying(true);
     }
 
-    setRunning(true);
+    setStage(1);
 
     timer.current = setTimeout(() => {
       if (!playRecall) {
