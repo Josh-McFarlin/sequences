@@ -61,9 +61,15 @@ const TestScreen = () => {
     <div className={clsx(classes.root)}>
       {stage === 0 && (
         <>
-        <label>
-          Participant ID:
-          <input inputMode="numeric" />
+          <h2>Memorization</h2>
+          <h3>
+            We will show a set of numbers when the session starts. You
+            will have 2 minutes to memorize these numbers. Memorize as much as
+            you can. While you memorize, we m play background music.
+          </h3>
+          <label>
+            Participant ID:
+            <input inputMode="numeric" />
           </label>
           <button onClick={handleStart}>Press When Ready</button>
         </>
