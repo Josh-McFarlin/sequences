@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useRouter } from "next/router";
 import { sequences } from "../../utils/sequence";
 import { songs, useSong } from "../../utils/music";
-import { useIntervalIndex } from "../../utils/timer";
+import YoutubePlayer from "../../components/YoutubePlayer";
 import urls from "../../utils/urls";
 import classes from "./TestScreen.module.scss";
 
@@ -15,6 +15,7 @@ const TestScreen = () => {
   const song = useSong(songs.instrumental[0]);
   // 0 = waiting, 1 = memorization, 2 = recall
   const [stage, setStage] = React.useState(0);
+  const [playing, setPlaying] = React.useState(false);
   const [playMemorization, setPlayMemorization] = React.useState(false);
   const [playRecall, setPlayRecall] = React.useState(false);
   const timer = React.useRef(0);
@@ -35,20 +36,22 @@ const TestScreen = () => {
     setPlayRecall(recallEnabled);
   }, [router]);
 
-  React.useEffect(() => {
-    if (running && playMemorization) {
-      song.play();
-    } else if (recall && playRecall) {
-      song.play();
-    } else {
-      song.pause();
-    }
-  }, [stage, playMemorization, playRecall]);
-
   const handleStart = () => {
+    if (playMemorization) {
+      setPlaying(true);
+    }
+
     setRunning(true);
 
-    timer.current = setTimeout(() => setStage(2), testTime);
+    timer.current = setTimeout(() => {
+      if (!playRecall) {
+        setPlaying(false);
+      } else if (!playMemorization) {
+        setPlaying(true);
+      }
+
+      setStage(2);
+    }, testTime);
   };
 
   const handleSubmit = async () => {
@@ -61,29 +64,35 @@ const TestScreen = () => {
     setRecall(false);
   };
 
-  if (stage === 0) {
-    return <button onClick={handleStart}>Press When Ready</button>;
-  }
-
-  if (stage === 1) {
-    return (
-      <div className={clsx(classes.root)}>
-        {sequences.map((sequence) => (
-          <h1 key={sequence}>{sequence}</h1>
-        ))}
-      </div>
-    );
-  }
-
   return (
     <div className={clsx(classes.root)}>
-      <h2>Recall</h2>
-      <h3>Please type the sequence in the order it appeared.</h3>
-      <input inputMode="numeric" />
-      <div className={classes.row}>
-        <button onClick={handleSubmit}>Submit</button>
-        <button onClick={handleForgot}>I Forgot</button>
-      </div>
+      <YoutubePlayer
+        url={"https://www.youtube.com/watch?v=1prweT95Mo0"}
+        playing={playing}
+      />
+      {stage === 0 && (
+        <>
+          <button onClick={handleStart}>Press When Ready</button>
+        </>
+      )}
+      {stage === 1 && (
+        <>
+          {sequences.map((sequence) => (
+            <h1 key={sequence}>{sequence}</h1>
+          ))}
+        </>
+      )}
+      {stage === 2 && (
+        <>
+          <h2>Recall</h2>
+          <h3>Please type the sequence in the order it appeared.</h3>
+          <input inputMode="numeric" />
+          <div className={classes.row}>
+            <button onClick={handleSubmit}>Submit</button>
+            <button onClick={handleForgot}>I Forgot</button>
+          </div>
+        </>
+      )}
     </div>
   );
 };
