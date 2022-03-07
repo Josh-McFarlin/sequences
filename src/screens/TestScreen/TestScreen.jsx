@@ -2,12 +2,10 @@ import React from "react";
 import clsx from "clsx";
 import { useRouter } from "next/router";
 import { sequences } from "../../utils/sequence";
-import { songs, useSong } from "../../utils/music";
 import YoutubePlayer from "../../components/YoutubePlayer";
 import urls from "../../utils/urls";
 import classes from "./TestScreen.module.scss";
 
-const sequenceLength = 4;
 const testTime = 2 * 60 * 1000; // 2 minutes
 
 const TestScreen = () => {
@@ -35,6 +33,10 @@ const TestScreen = () => {
     setPlayRecall(recallEnabled);
   }, [router]);
 
+  const handleSubmit = async () => {
+    await router.replace(urls.debrief);
+  };
+
   const handleStart = () => {
     if (playMemorization) {
       setPlaying(true);
@@ -50,17 +52,9 @@ const TestScreen = () => {
       }
 
       setStage(2);
+
+      timer.current = setTimeout(handleSubmit, testTime);
     }, testTime);
-  };
-
-  const handleSubmit = async () => {
-    await router.replace(urls.debrief);
-  };
-
-  const handleForgot = () => {
-    handleRestart();
-    setSequence(createSequence(sequenceLength));
-    setRecall(false);
   };
 
   return (
@@ -80,11 +74,15 @@ const TestScreen = () => {
       {stage === 2 && (
         <>
           <h2>Recall</h2>
-          <h3>Please type the sequence in the order it appeared.</h3>
-          <input inputMode="numeric" />
+          <h3>
+            Type the numbers you memorized in order, and press submit when the
+            timer is up. You will have 2 minutes, the timer starts now.
+          </h3>
+          {sequences.map((sequence) => (
+            <input key={sequence} inputMode="numeric" />
+          ))}
           <div className={classes.row}>
             <button onClick={handleSubmit}>Submit</button>
-            <button onClick={handleForgot}>I Forgot</button>
           </div>
         </>
       )}

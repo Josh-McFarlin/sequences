@@ -1,17 +1,12 @@
 import React from "react";
 import ReactPlayer from "react-player/youtube";
+import classes from "./YoutubePlayer.module.scss";
 
 const YoutubePlayer = ({ url, playing = false }) => (
   <ReactPlayer
+    className={classes.root}
     url={url}
     playing={playing}
-    style={{
-      width: 1,
-      height: 1,
-      position: "absolute",
-      bottom: 1,
-      right: 1,
-    }}
     width={1}
     height={1}
   />
