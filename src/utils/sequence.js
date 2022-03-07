@@ -16,3 +16,8 @@ export const createSequence = (length = 10) => {
 
   return result;
 };
+
+export const sequences = [
+  5123710011, 6123453052, 3156392998, 9704992100, 8089897773, 9083933625,
+  9124939504, 2539668444, 9084438724, 9136639698,
+];
